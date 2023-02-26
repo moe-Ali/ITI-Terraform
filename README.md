@@ -1,1 +1,1 @@
-# iti-Terraform
+# ITI-Terraform
