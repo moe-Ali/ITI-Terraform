@@ -18,6 +18,8 @@
 ![EC2](https://github.com/moe-Ali/ITI-Terraform/blob/main/Day3-project/Screenshots/ec2.png)
 ### Running LoadBalancers
 ![LB](https://github.com/moe-Ali/ITI-Terraform/blob/main/Day3-project/Screenshots/LB.png)
+### output_info.txt
+![output_info](https://github.com/moe-Ali/ITI-Terraform/blob/main/Day3-project/Screenshots/output_info.png)
 ### Nginx Proxy configuration on the 2 public EC2
 ![proxy](https://github.com/moe-Ali/ITI-Terraform/blob/main/Day3-project/Screenshots/proxy.png)
 ### Useing the Public LoadBalancer DNS to display the Apache on the 2 private EC2
