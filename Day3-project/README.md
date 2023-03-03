@@ -15,8 +15,7 @@ Working on dev namespace
 terraform.tfstate on S3
 ![S3](https://github.com/moe-Ali/ITI-Terraform/blob/main/Day3-project/Screenshots/s3_tfstate.png)
 Running Ec2
-![EC2](https://github.com/moe-Ali/ITI-Terraform/blob/main/Day3-project/Screenshots/s3_tfstate.png)
-https://github.com/moe-Ali/ITI-Terraform/blob/main/Day3-project/Screenshots/ec2.png
+![EC2](https://github.com/moe-Ali/ITI-Terraform/blob/main/Day3-project/Screenshots/ec2.png)
 Running LoadBalancers
 ![LB](https://github.com/moe-Ali/ITI-Terraform/blob/main/Day3-project/Screenshots/LB.png)
 Nginx Proxy configuration on the 2 public EC2
