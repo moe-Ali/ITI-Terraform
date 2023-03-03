@@ -1,2 +1,8 @@
 [public]
-public1 ansible_host=54.234.5.217 ansible_user=ubuntu ansible_ssh_private_key_file=../../../windwos-key.pem
+public1 ansible_host=3.88.226.142 ansible_user=ubuntu ansible_ssh_private_key_file=../../../windwos-key.pem
+public2 ansible_host=18.232.150.68  ansible_user=ubuntu ansible_ssh_private_key_file=../../../windwos-key.pem
+
+
+[private]
+private1 ansible_host=10.0.1.204 ansible_user=ubuntu ansible_ssh_private_key_file=windwos-key.pem
+private2 ansible_host=10.0.3.4 ansible_user=ubuntu ansible_ssh_private_key_file=windwos-key.pem
