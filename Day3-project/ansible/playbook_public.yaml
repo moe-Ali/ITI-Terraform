@@ -1,0 +1,75 @@
+- name: public ec2
+  become: true
+  hosts: public
+  vars:
+    home_path: /home/ubuntu
+    public_1: public1 #to run the playbook_private.yaml only at one public machine
+    application_dns: internal-privatelb-407032313.us-east-1.elb.amazonaws.com
+    private_ip1: 10.0.1.204
+    private_ip2: 10.0.3.4
+  tasks:
+
+    - name: 'Nginx proxy: Install Nginx'
+      apt: 
+        name: nginx
+        update_cache: yes
+
+    - name: 'Nginx proxy: Disable the Default Virtual Host'
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+
+    - name: 'Nginx proxy: Make configuration file'
+      shell: 'echo " " > /etc/nginx/sites-available/reverse-proxy.conf'
+
+    - name: 'Nginx proxy: Create the Nginx Reverse Proxy'
+      lineinfile:
+        path: /etc/nginx/sites-available/reverse-proxy.conf
+        line: "{{ item.line }}"
+      loop:
+      - {line: 'server {' }
+      - {line: '    listen 80;'}
+      - {line: '    location / {'}
+      - {line: '        proxy_pass http://{{application_dns}};'}
+      - {line: '    }'}
+      - {line: '}'}
+
+    - name: 'Nginx proxy: Create a symbolic link'
+      file:
+        src: /etc/nginx/sites-available/reverse-proxy.conf
+        dest: /etc/nginx/sites-enabled/reverse-proxy.conf
+        state: link
+      
+    - name: 'Nginx proxy: Restart Nginx service'
+      shell: systemctl restart nginx
+
+    - name: 'private ec2: copying ansible files'
+      copy:
+        src: "{{ item.file}}"
+        dest: "{{home_path}}"
+      loop:
+      - {file: './playbook_private.yaml'}
+      - {file: './inventory'}
+      - {file: '../../../windwos-key.pem'}
+
+    - name: 'private ec2: install ansible'
+      apt:
+        name: ansible
+        update_cache: yes
+      when: inventory_hostname == "{{public_1}}"
+
+    - name: 'private ec2: add ip to known hosts'
+      shell: "mkdir {{home_path}}/.ssh; touch {{home_path}}/.ssh/known_hosts"
+      when: inventory_hostname == "{{public_1}}"
+
+    - name: 'private ec2: add first ip to known hosts'
+      shell: "ssh-keyscan {{private_ip1}} >> {{home_path}}/.ssh/known_hosts" 
+      when: inventory_hostname == "{{public_1}}"
+
+    - name: 'private ec2: add second ip to known hosts' 
+      shell: "ssh-keyscan {{private_ip2}} >> {{home_path}}/.ssh/known_hosts"
+      when: inventory_hostname == "{{public_1}}"
+
+    - name: 'private ec2: run ansible code on private ec2'
+      shell: ansible-playbook {{home_path}}/playbook_private.yaml -i {{home_path}}/inventory    
+      when: inventory_hostname == "{{public_1}}"
