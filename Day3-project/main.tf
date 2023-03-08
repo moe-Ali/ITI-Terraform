@@ -51,22 +51,22 @@ module "dev-ec2" {
           "public1" = {
             associate_public_ip_address = true
             security_group = "public_sg"
-            subnet = module.dev-network.subnet_id["public1"] #this numbering depends on the order of inputed subnets
+            subnet = module.dev-network.subnet_id["public1"] 
           }
           "private1" = {
             associate_public_ip_address = false
             security_group = "private_sg"
-            subnet = module.dev-network.subnet_id["private1"] #this numbering depends on the order of inputed subnets
+            subnet = module.dev-network.subnet_id["private1"]
           }
           "public2" = {
             associate_public_ip_address = true
             security_group = "public_sg"
-            subnet = module.dev-network.subnet_id["public2"] #this numbering depends on the order of inputed subnets
+            subnet = module.dev-network.subnet_id["public2"] 
           }
           "private2" = {
             associate_public_ip_address = false
             security_group = "private_sg"
-            subnet = module.dev-network.subnet_id["private2"] #this numbering depends on the order of inputed subnets
+            subnet = module.dev-network.subnet_id["private2"] 
           }
         }
 
